@@ -1,34 +1,51 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * CLASS - AddOnService
- * Represents an optional service that can be added to a reservation.
+ * CLASS - AddOnServiceManager
+ * Manages optional services for a reservation.
  */
 
 public class bookmystayapp {
 
-    // Name of the service
-    private String serviceName;
-
-    // Cost of the service
-    private double cost;
+    // List to store services
+    private List<AddOnService> services;
 
     // Constructor
-    public bookmystayapp(String serviceName, double cost) {
-        this.serviceName = serviceName;
-        this.cost = cost;
+    public bookmystayapp() {
+        services = new ArrayList<>();
     }
 
-    // Getter for service name
-    public String getServiceName() {
-        return serviceName;
+    // Add a service
+    public void addService(AddOnService service) {
+        services.add(service);
+        System.out.println(service.getServiceName() + " added.");
     }
 
-    // Getter for cost
-    public double getCost() {
-        return cost;
+    // Remove a service
+    public void removeService(String serviceName) {
+        services.removeIf(service -> service.getServiceName().equalsIgnoreCase(serviceName));
+        System.out.println(serviceName + " removed.");
     }
 
-    // Display method (optional but useful)
-    public void displayService() {
-        System.out.println("Service: " + serviceName + ", Cost: ₹" + cost);
+    // Calculate total cost
+    public double calculateTotalCost() {
+        double total = 0;
+        for (AddOnService service : services) {
+            total += service.getCost();
+        }
+        return total;
+    }
+
+    // Display all services
+    public void displayAllServices() {
+        if (services.isEmpty()) {
+            System.out.println("No services added.");
+            return;
+        }
+
+        for (AddOnService service : services) {
+            service.displayService();
+        }
     }
 }
